@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Application</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+  body {
+    background-color: #f8f9fa;
+    text-align: center; 
+  }
+  .jumbotron {
+    background-color: #343a40;
+    color: #ffffff;
+  }
+  .login {
+    margin: auto;
+    max-width: 300px;
+  }
+  #quizData {
+    text-align: left; 
+  }
+</style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">Kaun Banega Crorepati</a>
+    </div>
+  </nav>
+
+  <header>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">Kaun Banega Crorepati</h1>
+        <p class="lead">Wet your intellectual appetite</p>
+        <div class="login">
+          <h1>Login</h1>
+          <form action="/login" method="post" id="loginForm">
+            <input type="text" placeholder="username" id="userName"><br><br>
+            <input type="password" placeholder="password" id="password"><br><br>
+            <p style="display: 'block'">New User? <a style="color: 'blue'" href="/register">Click here to register </a></p>
+            <button type="submit" class="btn btn-primary">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Footer -->
+  <footer class="mt-4">
+    <div class="container">
+      <p class="text-center">© Quiz Application 2024</p>
+      <p class="text-center">OOAD Project By:</p>
+      <p class="text-center">Sowmesh Sharma | Shauryadeepsinh G Raolji | Shubh Kanodia | Shashank Sundar</p>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+  document.getElementById("loginForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent the form from submitting
+      
+      // Get username and password from the form
+      const userName = document.getElementById("userName").value;
+      const password = document.getElementById("password").value;
+      
+      // Create an object with the form data
+      const formData = {
+        userName: userName,
+        password: password,
+        isSignUp : 1,
+      };
+
+      // Make an HTTP POST request to the backend endpoint
+      fetch('/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => {
+    	  response.json().then(data => {
+    	        console.log(data);
+    	        if(data.s === 'false') {
+    	              alert('Login failed. Please try again.');
+    	            } else if (data.s === 'true') {
+    	              // Redirect to the quiz page if login is successful
+    	              window.location.href = '/quiz';
+    	            } else {
+    	              alert('Invalid response from server.');
+    	            }
+    	      });
+    	  
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while processing your request. Please try again later.');
+      });
+    });
+  </script>
+</body>
+</html>

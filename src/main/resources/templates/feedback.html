@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Feedback</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            text-align: center;
+        }
+
+        .jumbotron {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+
+        #feedbackData {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Kaun Banega Crorepati</a>
+        </div>
+    </nav>
+
+    <header>
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4">Quiz Feedback</h1>
+                <p class="lead">Get personalized feedback on your performance</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="feedbackData"></div>
+    </div>
+
+    <footer class="mt-4">
+        <div class="container">
+            <p class="text-center">© Quiz Application 2024</p>
+            <p class="text-center">OOAD Project By:</p>
+            <p class="text-center">Sowmesh Sharma | Shauryadeepsinh G Raolji | Shubh Kanodia | Shashank Sundar</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Hardcoded quiz result data
+        const quizResult = {
+            "totalCorrect": 3,
+            "questionResults": [
+                {
+                    "question": "What is the capital of France?",
+                    "isCorrect": true
+                },
+                {
+                    "question": "Who wrote 'Romeo and Juliet'?",
+                    "isCorrect": false
+                },
+                {
+                    "question": "What is the chemical symbol for water?",
+                    "isCorrect": true
+                }
+            ]
+        };
+
+        // Send the quiz result data to the backend and display the feedback
+        fetch('/give_feedback', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(quizResult)
+        })
+        .then(response => response.text())
+        .then(feedback => {
+            document.getElementById('feedbackData').innerHTML = `<pre>${feedback}</pre>`;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while processing your request. Please try again later.');
+        });
+    </script>
+</body>
+</html>

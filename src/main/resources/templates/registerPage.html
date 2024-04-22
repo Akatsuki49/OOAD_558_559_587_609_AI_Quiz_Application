@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Application</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+  /* Inline CSS styles */
+  /* Define your custom styles here */
+  body {
+    background-color: #f8f9fa;
+    text-align: center; /* Center align all text */
+  }
+  .jumbotron {
+    background-color: #343a40;
+    color: #ffffff;
+  }
+  .login {
+    margin: auto; /* Center the login form horizontally */
+    max-width: 300px; /* Set maximum width for the login form */
+  }
+  #quizData {
+    text-align: left; /* Align quiz data list items to the left */
+  }
+</style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">Kaun Banega Crorepati</a>
+    </div>
+  </nav>
+
+  <header>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">Kaun Banega Crorepati</h1>
+        <p class="lead">Wet your intellectual appetite</p>
+        <div class="login">
+          <h1>Register</h1>
+          <form id="registerForm" action="/login" method="post">
+            <input type="text" placeholder="username" id="userName"><br><br>
+            <input type="password" placeholder="password" id="password"><br><br>
+            <p style="display: 'block'">Registered User? <a style="color: 'blue'" href="/">Click here to login </a></p>
+            <button type="submit" class="btn btn-primary">Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- Footer -->
+  <footer class="mt-4">
+    <div class="container">
+      <p class="text-center">© Quiz Application 2024</p>
+      <p class="text-center">OOAD Project By:</p>
+      <p class="text-center">Sowmesh Sharma | Shauryadeepsinh G Raolji | Shubh Kanodia | Shashank Sundar</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+  document.getElementById("registerForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent the form from submitting
+      
+      // Get username and password from the form
+      const userName = document.getElementById("userName").value;
+      const password = document.getElementById("password").value;
+      
+      // Create an object with the form data
+      const formData = {
+        userName: userName,
+        password: password,
+        isSignUp : 0,
+      };
+
+      // Make an HTTP POST request to the backend endpoint
+      fetch('/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => {
+        if (response.ok) {
+          window.location.href = '/quiz';
+        } else {
+          alert('Registration failed. Please try again.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while processing your request. Please try again later.');
+      });
+    });
+  </script>
+</body>
+</html>
