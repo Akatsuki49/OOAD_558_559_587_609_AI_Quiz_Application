@@ -20,7 +20,7 @@ public class FeedbackController {
 
         // Construct the query including information about the quiz result
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append("According to the quiz results, here are some areas for improvement:\n\n");
+        queryBuilder.append("According to the quiz results, here are some areas for improvement give me a list:\n\n");
 
         // Provide overall feedback based on total correct answers
         queryBuilder.append("Total correct answers: ").append(quizResult.getTotalCorrect()).append("\n");
