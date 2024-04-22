@@ -11,11 +11,11 @@ import java.util.List;
 public class QuizValidationController {
     @PostMapping("/validate_answers")
     public QuizResult validateAnswers(@RequestBody QuizAnswers quizAnswers) {
-        List<QuestionAnswer> questionAnswers = quizAnswers.getQuestionAnswers();
+        List<QuestionAnswerOpt> questionAnswers = quizAnswers.getQuestionAnswers();
         int totalCorrect = 0;
         List<QuestionResult> questionResults = new ArrayList<>();
 
-        for (QuestionAnswer qa : questionAnswers) {
+        for (QuestionAnswerOpt qa : questionAnswers) {
             boolean isCorrect = qa.getChosenAnswer().equalsIgnoreCase(qa.getCorrectAnswer());
             if (isCorrect) {
                 totalCorrect++;

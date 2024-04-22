@@ -17,6 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginController {
 	@GetMapping("/")
 	public String loginUser() {
-		return "loginPage";
+		return "resultsPage";
 	}
 }
