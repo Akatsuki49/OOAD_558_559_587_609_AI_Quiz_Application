@@ -74,34 +74,34 @@
         isSignUp : 1,
       };
 
-    window.location.href = '/results';
+//     window.location.href = '/quizPage';
 
-      // // Make an HTTP POST request to the backend endpoint
-      // fetch('/auth', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify(formData)
-      // })
-      // .then(response => {
-    	//   response.json().then(data => {
-    	//         console.log(data);
-    	//         if(data.s === 'false') {
-    	//               alert('Login failed. Please try again.');
-    	//             } else if (data.s === 'true') {
-    	//               // Redirect to the quiz page if login is successful
-    	//               window.location.href = '/quiz';
-    	//             } else {
-    	//               alert('Invalid response from server.');
-    	//             }
-    	//       });
-    	//
-      // })
-      // .catch(error => {
-      //   console.error('Error:', error);
-      //   alert('An error occurred while processing your request. Please try again later.');
-      // });
+       // Make an HTTP POST request to the backend endpoint
+       fetch('/auth', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(formData)
+       })
+       .then(response => {
+    	   response.json().then(data => {
+    	         console.log(data);
+    	         if(data.s === 'false') {
+    	               alert('Login failed. Please try again.');
+    	             } else if (data.s === 'true') {
+    	               // Redirect to the quiz page if login is successful
+    	               window.location.href = '/quiz';
+    	             } else {
+                   alert('Invalid response from server.');
+    	             }
+    	       });
+    	
+       })
+       .catch(error => {
+         console.error('Error:', error);
+         alert('An error occurred while processing your request. Please try again later.');
+       });
     });
   </script>
 </body>

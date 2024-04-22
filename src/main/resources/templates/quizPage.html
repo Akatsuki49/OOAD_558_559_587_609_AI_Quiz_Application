@@ -1,23 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>ChatGPT Question Generator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT Question Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            text-align: center;
+        }
+        .jumbotron {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+        .login {
+            margin: auto;
+            max-width: 300px;
+        }
+        #quizData {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">Kaun Banega Crorepati</a>
+    </div>
+</nav>
+
+<header>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">ChatGPT Question Generator</h1>
+            <p class="lead">Generate Questions of Various Difficulties</p>
+            <div class="buttons">
+                <button class="btn btn-primary" onclick="generateQuestions('e')">Generate Easy Questions</button>
+                <button class="btn btn-primary" onclick="generateQuestions('m')">Generate Medium Questions</button>
+                <button class="btn btn-primary" onclick="generateQuestions('h')">Generate Hard Questions</button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div id="questions"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="mt-4">
+    <div class="container">
+        <p class="text-center">© Quiz Application 2024</p>
+        <p class="text-center">OOAD Project By:</p>
+        <p class="text-center">Sowmesh Sharma | Shauryadeepsinh G Raolji | Shubh Kanodia | Shashank Sundar</p>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
     function generateQuestions(difficulty) {
         // Hide all buttons
-        var buttons = document.getElementsByTagName("button");
+        var buttons = document.getElementsByClassName("btn");
         for (var i = 0; i < buttons.length; i++) {
             buttons[i].style.display = "none";
         }
-        
+
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "/generate_questions", true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var questions = JSON.parse(xhr.responseText);
-								console.log(questions)
+                console.log(questions);
                 renderQuestions(questions);
             }
         };
@@ -26,76 +86,70 @@
     }
 
     function renderQuestions(questions) {
-    var form = document.createElement("form");
+        var form = document.createElement("form");
 
-    questions.forEach(function(question, index) {
-        var questionDiv = document.createElement("div");
-        var questionText = document.createElement("p");
-        questionText.textContent = question.question;
-        questionDiv.appendChild(questionText);
+        questions.forEach(function(question, index) {
+            var questionDiv = document.createElement("div");
+            var questionText = document.createElement("p");
+            questionText.textContent = question.question;
+            questionDiv.appendChild(questionText);
 
-        question.options.forEach(function(option) {
-            var label = document.createElement("label");
-            
-            var radioInput = document.createElement("input");
-            radioInput.type = "radio";
-            radioInput.name = "question" + index;
-            radioInput.value = option;
-            label.appendChild(radioInput);
+            question.options.forEach(function(option) {
+                var label = document.createElement("label");
 
-            var optionText = document.createTextNode(option);
-            label.appendChild(optionText);
+                var radioInput = document.createElement("input");
+                radioInput.type = "radio";
+                radioInput.name = "question" + index;
+                radioInput.value = option;
+                label.appendChild(radioInput);
 
-            questionDiv.appendChild(label);
-            questionDiv.appendChild(document.createElement("br"));
+                var optionText = document.createTextNode(option);
+                label.appendChild(optionText);
+
+                questionDiv.appendChild(label);
+                questionDiv.appendChild(document.createElement("br"));
+            });
+
+            form.appendChild(questionDiv);
         });
 
-        form.appendChild(questionDiv);
-    });
-
-		var submitButton = document.createElement("button");
+        var submitButton = document.createElement("button");
         submitButton.textContent = "Submit";
+        submitButton.className = "btn btn-primary";
         form.appendChild(submitButton);
-		var dataList = [];
-		
-		form.addEventListener("submit", function(event) {
-				event.preventDefault(); // Prevent default form submission
-				
-				// Iterate through each question and get the selected option
-				questions.forEach(function(question, index) {
-						var selectedOption = document.querySelector("input[name='question" + index + "']:checked");
-						
-						if (selectedOption) {
-								console.log("Question: " + question.question);
-								console.log("Chosen Option: " + selectedOption.value);
-								console.log("Correct Answer: " + question.correct_answer);
-								console.log("-------------------------");
-								var data = {
-									"question": question.question,
-									"correctAnswer": question.correct_answer,
-									"chosenAnswer": selectedOption.value
-								}
-								dataList.push(data)
-						} else {
-								console.log("Question " + index + " not answered.");
-						}
-				});
-				console.log(dataList);
+        var dataList = [];
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Iterate through each question and get the selected option
+            questions.forEach(function(question, index) {
+                var selectedOption = document.querySelector("input[name='question" + index + "']:checked");
+
+                if (selectedOption) {
+                    console.log("Question: " + question.question);
+                    console.log("Chosen Option: " + selectedOption.value);
+                    console.log("Correct Answer: " + question.correct_answer);
+                    console.log("-------------------------");
+                    var data = {
+                        "question": question.question,
+                        "correctAnswer": question.correct_answer,
+                        "chosenAnswer": selectedOption.value
+                    }
+                    dataList.push(data)
+                } else {
+                    console.log("Question " + index + " not answered.");
+                }
+            });
+            console.log(dataList);
             // Store the dataList in localStorage
             localStorage.setItem('quizDataList', JSON.stringify(dataList));
             window.location.href = '/results';
-		});
+        });
 
-    document.getElementById("questions").appendChild(form);
-}
+        document.getElementById("questions").appendChild(form);
+    }
 
 </script>
-</head>
-<body>
-    <h1>ChatGPT Question Generator</h1>
-    <button onclick="generateQuestions('e')">Generate Easy Questions</button>
-    <button onclick="generateQuestions('m')">Generate Medium Questions</button>
-    <button onclick="generateQuestions('h')">Generate Hard Questions</button>
-    <div id="questions"></div>
 </body>
 </html>
