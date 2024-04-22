@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Result</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            text-align: center;
+        }
+
+        .jumbotron {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+
+        #resultData {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">Kaun Banega Crorepati</a>
+    </div>
+</nav>
+
+<header>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Quiz Result</h1>
+            <p class="lead">Check your performance</p>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div id="resultData"></div>
+    <button id="feedbackButton" class="btn btn-primary mt-3">Get Feedback</button>
+</div>
+
+<footer class="mt-4">
+    <div class="container">
+        <p class="text-center">© Quiz Application 2024</p>
+        <p class="text-center">OOAD Project By:</p>
+        <p class="text-center">Sowmesh Sharma | Shauryadeepsinh G Raolji | Shubh Kanodia | Shashank Sundar</p>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // Hardcoded quiz result data
+    const quizResult = {
+        "questionAnswers": [
+            {
+                "question": "What is the capital of France?",
+                // "options": ["London", "Paris", "Berlin", "Madrid"],
+                "correctAnswer": "Paris",
+                "chosenAnswer": "London"
+            },
+            {
+                "question": "Who wrote the novel 'To Kill a Mockingbird'?",
+                // "options": ["Harper Lee", "Stephen King", "J.K. Rowling", "Mark Twain"],
+                "correctAnswer": "Harper Lee",
+                "chosenAnswer": "Harper Lee"
+            },
+            {
+                "question": "What is the chemical symbol for water?",
+                // "options": ["H2O", "CO2", "NaCl", "O2"],
+                "correctAnswer": "H2O",
+                "chosenAnswer": "H2O"
+            }
+        ]
+    };
+
+    // Function to validate answers and display results
+    function displayResults() {
+        fetch('http://localhost:8090/validate_answers', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(quizResult)
+        })
+            .then(response => response.json())
+            .then(result => {
+                const resultDataDiv = document.getElementById('resultData');
+                resultDataDiv.innerHTML = `<p>Total Correct Answers: ${result.totalCorrect}</p>`;
+                result.questionResults.forEach(question => {
+                    const questionDiv = document.createElement('div');
+                    questionDiv.classList.add('question');
+                    questionDiv.innerHTML = `<p>${question.question}: ${question.correct ? 'Correct' : 'Incorrect'}</p>`;
+                    resultDataDiv.appendChild(questionDiv);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while processing your request. Please try again later.');
+            });
+    }
+
+    // Call the function to display results when the page loads
+    displayResults();
+
+    // Add event listener to the feedback button
+    document.getElementById('feedbackButton').addEventListener('click', function() {
+        console.log(quizResult);
+        localStorage.setItem('quizResult', JSON.stringify(quizResult));
+        window.location.href = '/feedback';
+    });
+</script>
+</body>
+</html>
