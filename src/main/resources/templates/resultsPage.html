@@ -54,28 +54,46 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
     // Hardcoded quiz result data
+    // const quizResult = {
+    //     "questionAnswers": [
+    //         {
+    //             "question": "What is the capital of France?",
+    //             // "options": ["London", "Paris", "Berlin", "Madrid"],
+    //             "correctAnswer": "Paris",
+    //             "chosenAnswer": "London"
+    //         },
+    //         {
+    //             "question": "Who wrote the novel 'To Kill a Mockingbird'?",
+    //             // "options": ["Harper Lee", "Stephen King", "J.K. Rowling", "Mark Twain"],
+    //             "correctAnswer": "Harper Lee",
+    //             "chosenAnswer": "Harper Lee"
+    //         },
+    //         {
+    //             "question": "What is the chemical symbol for water?",
+    //             // "options": ["H2O", "CO2", "NaCl", "O2"],
+    //             "correctAnswer": "H2O",
+    //             "chosenAnswer": "H2O"
+    //         }
+    //     ]
+    // };
+
+    // Retrieve the stored dataList from localStorage
+    const dataListString = localStorage.getItem('quizDataList');
+
+    // Parse the stringified dataList into a JavaScript array of objects
+    const dataList = JSON.parse(dataListString);
+
+    // Construct the quizResult object based on the dataList
     const quizResult = {
-        "questionAnswers": [
-            {
-                "question": "What is the capital of France?",
-                // "options": ["London", "Paris", "Berlin", "Madrid"],
-                "correctAnswer": "Paris",
-                "chosenAnswer": "London"
-            },
-            {
-                "question": "Who wrote the novel 'To Kill a Mockingbird'?",
-                // "options": ["Harper Lee", "Stephen King", "J.K. Rowling", "Mark Twain"],
-                "correctAnswer": "Harper Lee",
-                "chosenAnswer": "Harper Lee"
-            },
-            {
-                "question": "What is the chemical symbol for water?",
-                // "options": ["H2O", "CO2", "NaCl", "O2"],
-                "correctAnswer": "H2O",
-                "chosenAnswer": "H2O"
-            }
-        ]
+        questionAnswers: dataList.map(item => ({
+            question: item.question,
+            correctAnswer: item.correctAnswer,
+            chosenAnswer: item.chosenAnswer
+        }))
     };
+
+    // Now you can use the constructed quizResult object
+    console.log(quizResult);
 
     // Function to validate answers and display results
     function displayResults() {

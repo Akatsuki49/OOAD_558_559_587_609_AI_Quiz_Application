@@ -81,6 +81,9 @@
 						}
 				});
 				console.log(dataList);
+            // Store the dataList in localStorage
+            localStorage.setItem('quizDataList', JSON.stringify(dataList));
+            window.location.href = '/results';
 		});
 
     document.getElementById("questions").appendChild(form);
