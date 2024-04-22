@@ -22,63 +22,91 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">Kaun Banega Crorepati</a>
-        </div>
-    </nav>
-
-    <header>
-        <div class="jumbotron jumbotron-fluid">
-            <div class="container">
-                <h1 class="display-4">Quiz Feedback</h1>
-                <p class="lead">Get personalized feedback on your performance</p>
-            </div>
-        </div>
-    </header>
-
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <div id="feedbackData"></div>
+        <a class="navbar-brand" href="#">Kaun Banega Crorepati</a>
     </div>
+</nav>
 
-    <footer class="mt-4">
+<header>
+    <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <p class="text-center">© Quiz Application 2024</p>
-            <p class="text-center">OOAD Project By:</p>
-            <p class="text-center">Sowmesh Sharma | Shauryadeepsinh G Raolji | Shubh Kanodia | Shashank Sundar</p>
+            <h1 class="display-4">Quiz Feedback</h1>
+            <p class="lead">Get personalized feedback on your performance</p>
         </div>
-    </footer>
+    </div>
+</header>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        // Hardcoded quiz result data
-        const quizResult = {
-            "totalCorrect": 3,
-            "questionResults": [
-                {
-                    "question": "What is the capital of France?",
-                    "isCorrect": true
-                },
-                {
-                    "question": "Who wrote 'Romeo and Juliet'?",
-                    "isCorrect": false
-                },
-                {
-                    "question": "What is the chemical symbol for water?",
-                    "isCorrect": true
-                }
-            ]
-        };
+<div class="container">
+    <div id="feedbackData"></div>
+</div>
 
-        // Send the quiz result data to the backend and display the feedback
-        fetch('/give_feedback', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(quizResult)
-        })
+<footer class="mt-4">
+    <div class="container">
+        <p class="text-center">© Quiz Application 2024</p>
+        <p class="text-center">OOAD Project By:</p>
+        <p class="text-center">Sowmesh Sharma | Shauryadeepsinh G Raolji | Shubh Kanodia | Shashank Sundar</p>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+
+    // const quizResult = {
+    //     "totalCorrect": 2,
+    //     "questionResults": [
+    //         {
+    //             "question": "What is the capital of France?",
+    //             "isCorrect": true
+    //         },
+    //         {
+    //             "question": "Who wrote 'Romeo and Juliet'?",
+    //             "isCorrect": false
+    //         },
+    //         {
+    //             "question": "What is the chemical symbol for water?",
+    //             "isCorrect": true
+    //         }
+    //     ]
+    // };
+    // Retrieve the quiz result object passed from the previous page
+    // const quizResult = JSON.stringify(localStorage.getItem('quizResult'));
+    //
+    // console.log(quizResult);
+    //
+    //
+
+
+
+    // Retrieve the stringified JSON object from localStorage
+    const storedResultString = localStorage.getItem('quizResult');
+
+    // Parse the stringified JSON object into a JavaScript object
+    const storedResult = JSON.parse(storedResultString);
+
+    // Transform the parsed result into the desired format
+    const transformedResult = {
+        totalCorrect: storedResult.questionAnswers.filter(answer => answer.correctAnswer === answer.chosenAnswer).length,
+        questionResults: storedResult.questionAnswers.map(answer => ({
+            question: answer.question,
+            isCorrect: answer.correctAnswer === answer.chosenAnswer
+        }))
+    };
+
+    // Now you can use the transformedResult object
+    console.log(transformedResult);
+
+    // Send the quiz result data to the backend and display the feedback
+    fetch('http://localhost:8090/give_feedback', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(transformedResult)
+        // body: JSON.stringify(quizResult)
+        // body: quizResult
+    })
         .then(response => response.text())
         .then(feedback => {
             document.getElementById('feedbackData').innerHTML = `<pre>${feedback}</pre>`;
@@ -87,6 +115,6 @@
             console.error('Error:', error);
             alert('An error occurred while processing your request. Please try again later.');
         });
-    </script>
+</script>
 </body>
 </html>
