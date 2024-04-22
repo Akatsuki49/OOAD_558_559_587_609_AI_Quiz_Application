@@ -1,10 +1,8 @@
 package com.example.demo;
-import java.util.List;
 
 public class QuestionAnswerOpt {
     //each question will have a string q, list of optns, and correct ans
     private String question;
-    private List<String> options;
     private String correctAnswer;
     private String chosenAnswer;
 
@@ -22,14 +20,6 @@ public class QuestionAnswerOpt {
 
     public void setQuestion(String question) {
         this.question = question;
-    }
-
-    public List<String> getOptions() {
-        return options;
-    }
-
-    public void setOptions(List<String> options) {
-        this.options = options;
     }
 
     public String getCorrectAnswer() {

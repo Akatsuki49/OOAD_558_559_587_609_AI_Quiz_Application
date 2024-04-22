@@ -26,59 +26,64 @@
     }
 
     function renderQuestions(questions) {
-        var form = document.createElement("form");
+    var form = document.createElement("form");
 
-        questions.forEach(function(question, index) {
-            var questionDiv = document.createElement("div");
-            var questionText = document.createElement("p");
-            questionText.textContent = question.question;
-            questionDiv.appendChild(questionText);
+    questions.forEach(function(question, index) {
+        var questionDiv = document.createElement("div");
+        var questionText = document.createElement("p");
+        questionText.textContent = question.question;
+        questionDiv.appendChild(questionText);
 
-            question.options.forEach(function(option) {
-                var label = document.createElement("label");
-                
-                var radioInput = document.createElement("input");
-                radioInput.type = "radio";
-                radioInput.name = "question" + index;
-                radioInput.value = option;
-                label.appendChild(radioInput);
+        question.options.forEach(function(option) {
+            var label = document.createElement("label");
+            
+            var radioInput = document.createElement("input");
+            radioInput.type = "radio";
+            radioInput.name = "question" + index;
+            radioInput.value = option;
+            label.appendChild(radioInput);
 
-                var optionText = document.createTextNode(option);
-                label.appendChild(optionText);
+            var optionText = document.createTextNode(option);
+            label.appendChild(optionText);
 
-                questionDiv.appendChild(label);
-                questionDiv.appendChild(document.createElement("br"));
-            });
-
-            form.appendChild(questionDiv);
+            questionDiv.appendChild(label);
+            questionDiv.appendChild(document.createElement("br"));
         });
 
-        // Add submit button
-        var submitButton = document.createElement("button");
+        form.appendChild(questionDiv);
+    });
+
+		var submitButton = document.createElement("button");
         submitButton.textContent = "Submit";
         form.appendChild(submitButton);
+		var dataList = [];
+		form.addEventListener("submit", function(event) {
+				event.preventDefault(); // Prevent default form submission
+				
+				// Iterate through each question and get the selected option
+				questions.forEach(function(question, index) {
+						var selectedOption = document.querySelector("input[name='question" + index + "']:checked");
+						
+						if (selectedOption) {
+								console.log("Question: " + question.question);
+								console.log("Chosen Option: " + selectedOption.value);
+								console.log("Correct Answer: " + question.correct_answer);
+								console.log("-------------------------");
+								var data = {
+									"question": question.question,
+									"correctAnswer": question.correct_answer,
+									"chosenAnswer": selectedOption.value
+								}
+								dataList.push(data)
+						} else {
+								console.log("Question " + index + " not answered.");
+						}
+				});
+				console.log(dataList);
+		});
 
-        // Event listener for form submission
-        form.addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent default form submission
-            
-            // Iterate through each question and get the selected option
-            questions.forEach(function(question, index) {
-                var selectedOption = document.querySelector("input[name='question" + index + "']:checked");
-                
-                if (selectedOption) {
-                    console.log("Question: " + question.question);
-                    console.log("Chosen Option: " + selectedOption.value);
-                    console.log("Correct Answer: " + question.correct_answer);
-                    console.log("-------------------------");
-                } else {
-                    console.log("Question " + index + " not answered.");
-                }
-            });
-        });
-
-        document.getElementById("questions").appendChild(form);
-    }
+    document.getElementById("questions").appendChild(form);
+}
 
 </script>
 </head>
