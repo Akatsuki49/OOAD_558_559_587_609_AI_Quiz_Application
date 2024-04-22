@@ -20,7 +20,7 @@ public class QuizValidationController {
             if (isCorrect) {
                 totalCorrect++;
             }
-            questionResults.add(new QuestionResult(qa.getQuestion(), isCorrect));
+            questionResults.add(new QuestionResult(qa.getQuestion(), qa.getCorrectAnswer(), isCorrect));
         }
 
         return new QuizResult(totalCorrect, questionResults);
