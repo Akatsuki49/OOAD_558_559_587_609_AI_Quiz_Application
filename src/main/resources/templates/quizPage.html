@@ -2,9 +2,91 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ChatGPT Question Generator</title>
+<script>
+    function generateQuestions(difficulty) {
+        // Hide all buttons
+        var buttons = document.getElementsByTagName("button");
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].style.display = "none";
+        }
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/generate_questions", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var questions = JSON.parse(xhr.responseText);
+								console.log(questions)
+                renderQuestions(questions);
+            }
+        };
+        var data = JSON.stringify({ "difficulty": difficulty });
+        xhr.send(data);
+    }
+
+    function renderQuestions(questions) {
+        var form = document.createElement("form");
+
+        questions.forEach(function(question, index) {
+            var questionDiv = document.createElement("div");
+            var questionText = document.createElement("p");
+            questionText.textContent = question.question;
+            questionDiv.appendChild(questionText);
+
+            question.options.forEach(function(option) {
+                var label = document.createElement("label");
+                
+                var radioInput = document.createElement("input");
+                radioInput.type = "radio";
+                radioInput.name = "question" + index;
+                radioInput.value = option;
+                label.appendChild(radioInput);
+
+                var optionText = document.createTextNode(option);
+                label.appendChild(optionText);
+
+                questionDiv.appendChild(label);
+                questionDiv.appendChild(document.createElement("br"));
+            });
+
+            form.appendChild(questionDiv);
+        });
+
+        // Add submit button
+        var submitButton = document.createElement("button");
+        submitButton.textContent = "Submit";
+        form.appendChild(submitButton);
+
+        // Event listener for form submission
+        form.addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            // Iterate through each question and get the selected option
+            questions.forEach(function(question, index) {
+                var selectedOption = document.querySelector("input[name='question" + index + "']:checked");
+                
+                if (selectedOption) {
+                    console.log("Question: " + question.question);
+                    console.log("Chosen Option: " + selectedOption.value);
+                    console.log("Correct Answer: " + question.correct_answer);
+                    console.log("-------------------------");
+                } else {
+                    console.log("Question " + index + " not answered.");
+                }
+            });
+        });
+
+        document.getElementById("questions").appendChild(form);
+    }
+
+</script>
 </head>
 <body>
-	<h1>Hi, Quiz</h1>
+    <h1>ChatGPT Question Generator</h1>
+    <button onclick="generateQuestions('e')">Generate Easy Questions</button>
+    <button onclick="generateQuestions('m')">Generate Medium Questions</button>
+    <button onclick="generateQuestions('h')">Generate Hard Questions</button>
+    <div id="questions"></div>
 </body>
 </html>

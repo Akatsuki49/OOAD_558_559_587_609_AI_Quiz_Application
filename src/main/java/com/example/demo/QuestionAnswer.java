@@ -3,9 +3,17 @@ package com.example.demo;
 import java.util.List;
 
 public class QuestionAnswer {
+    private String question;
     private List<String> options;
     private String correctAnswer;
-    private String chosenAnswer;
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
 
     public List<String> getOptions() {
         return options;
@@ -13,14 +21,6 @@ public class QuestionAnswer {
 
     public void setOptions(List<String> options) {
         this.options = options;
-    }
-
-    public String getChosenAnswer() {
-        return chosenAnswer;
-    }
-
-    public void setChosenAnswer(String chosenAnswer) {
-        this.chosenAnswer = chosenAnswer;
     }
 
     public String getCorrectAnswer() {

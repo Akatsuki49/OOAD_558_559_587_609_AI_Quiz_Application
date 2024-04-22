@@ -20,11 +20,11 @@ public class ChatGPTController {
     {
         String query="";
         if(difficulty.equals("e"))
-            query="Create 5 easy, accurate, and entertaining multiple-choice questions in the style of Millionaire show, with 4 options (A, B, C, and D) and 1 correct answer.Return an array of JSON objects, each containing the fields: 'question', 'A', 'B', 'C', 'D', and 'correct answer(A,B,C,D)'. The answers should be verifiable, factual and without misinformation.";
+            query="Create 5 easy, accurate, and entertaining multiple-choice questions in the style of Millionaire show, with 4 options and 1 correct answer.Return an array of JSON objects, each containing the fields: 'question', 'options' list, and 'correct answer' as the keys. The answers should be verifiable, factual and without misinformation." ;
         else if(difficulty.equals("m"))
-            query="Create 5 highly challenging , accurate multiple-choice questions in the style of Millionaire show, with 4 options (A, B, C, and D) with only 1 correct option.Return an array of JSON objects, each containing the fields: 'question', 'A', 'B', 'C', 'D', and 'correct answer(A,B,C,D)'. The answers should be verifiable, factual and without misinformation.";
+            query="Create 5 highly challenging , accurate multiple-choice questions in the style of Millionaire show, with 4 options with only 1 correct option.Return an array of JSON objects, each containing the fields: 'question', 'options' list, and 'correct answer' as the keys. The answers should be verifiable, factual and without misinformation.";
         else
-            query="Create 5 extremely challenging, obscure,niche multiple-choice questions in the style of Millionaire show, each with four options (A, B, C, and D) and one correct answer.Return an array of JSON objects , with fields: 'question', 'A', 'B', 'C', 'D', and 'correct answer(A,B,C,D)'.Questions must be based on factual, verifiable information that is not widely known.";
+            query="Create 5 extremely challenging, obscure,niche multiple-choice questions in the style of Millionaire show, each with four options (A, B, C, and D) and one correct answer.Return an array of JSON objects , with fields: 'question', 'options' list, and 'correct answer' as the keys. Questions must be based on factual, verifiable information that is not widely known.";
 
         ChatGPTRequest req = new ChatGPTRequest();
         Message msg = new Message();
@@ -44,7 +44,9 @@ public class ChatGPTController {
 
         HttpEntity<ChatGPTRequest> entity = new HttpEntity<ChatGPTRequest>(req, header);
         ResponseEntity<ChatGPTResponse> resp = restTemplate.exchange("https://api.openai.com/v1/chat/completions", HttpMethod.POST, entity, ChatGPTResponse.class);
+        String jsonResponse = resp.getBody().getChoices().get(0).getMessage().getContent();
+        String trimmedResponse = jsonResponse.substring(8, jsonResponse.length()-4);
+        return trimmedResponse;
 
-        return resp.getBody().getChoices().get(0).getMessage().getContent();
     }
 }
