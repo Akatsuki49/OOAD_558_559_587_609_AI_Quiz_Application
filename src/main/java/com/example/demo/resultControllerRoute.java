@@ -4,11 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-public class resultControllerRoute {
 
+@Controller
+public class resultControllerRoute {
     @GetMapping("/results")
-    public String userResults() {
+    public String userResult() {
         return "resultsPage";
     }
 }
