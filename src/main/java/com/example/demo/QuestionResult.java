@@ -3,8 +3,18 @@ package com.example.demo;
 public class QuestionResult {
     private String question;
     private boolean isCorrect;
+    private String correctAnswer;
 
-    public QuestionResult(String question, boolean isCorrect) {
+    public String getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public void setCorrectAnswer(String correctAnswer) {
+        this.correctAnswer = correctAnswer;
+    }
+
+    public QuestionResult(String question,String correctAnswer, boolean isCorrect) {
+        this.correctAnswer = correctAnswer;
         this.question = question;
         this.isCorrect = isCorrect;
     }

@@ -90,7 +90,8 @@
         totalCorrect: storedResult.questionAnswers.filter(answer => answer.correctAnswer === answer.chosenAnswer).length,
         questionResults: storedResult.questionAnswers.map(answer => ({
             question: answer.question,
-            isCorrect: answer.correctAnswer === answer.chosenAnswer
+            isCorrect: answer.correctAnswer === answer.chosenAnswer,
+            correctAnswer: answer.correctAnswer
         }))
     };
 
