@@ -39,6 +39,7 @@
 
 <div class="container">
     <div id="feedbackData"></div>
+    <button id="playAgainButton" class="btn btn-primary mt-3">Play Again</button>
 </div>
 
 <footer class="mt-4">
@@ -52,32 +53,6 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-
-    // const quizResult = {
-    //     "totalCorrect": 2,
-    //     "questionResults": [
-    //         {
-    //             "question": "What is the capital of France?",
-    //             "isCorrect": true
-    //         },
-    //         {
-    //             "question": "Who wrote 'Romeo and Juliet'?",
-    //             "isCorrect": false
-    //         },
-    //         {
-    //             "question": "What is the chemical symbol for water?",
-    //             "isCorrect": true
-    //         }
-    //     ]
-    // };
-    // Retrieve the quiz result object passed from the previous page
-    // const quizResult = JSON.stringify(localStorage.getItem('quizResult'));
-    //
-    // console.log(quizResult);
-    //
-    //
-
-
 
     // Retrieve the stringified JSON object from localStorage
     const storedResultString = localStorage.getItem('quizResult');
@@ -105,8 +80,6 @@
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(transformedResult)
-        // body: JSON.stringify(quizResult)
-        // body: quizResult
     })
         .then(response => response.text())
         .then(feedback => {
@@ -116,6 +89,11 @@
             console.error('Error:', error);
             alert('An error occurred while processing your request. Please try again later.');
         });
+
+    // Add event listener to the "Play Again" button
+    document.getElementById('playAgainButton').addEventListener('click', function() {
+        window.location.href = '/quiz';
+    });
 </script>
 </body>
 </html>
