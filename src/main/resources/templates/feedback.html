@@ -52,10 +52,50 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    // Retrieve the quiz result object passed from the previous page
-    const quizResult = JSON.parse(localStorage.getItem('quizResult'));
 
-    console.log(quizResult);
+    // const quizResult = {
+    //     "totalCorrect": 2,
+    //     "questionResults": [
+    //         {
+    //             "question": "What is the capital of France?",
+    //             "isCorrect": true
+    //         },
+    //         {
+    //             "question": "Who wrote 'Romeo and Juliet'?",
+    //             "isCorrect": false
+    //         },
+    //         {
+    //             "question": "What is the chemical symbol for water?",
+    //             "isCorrect": true
+    //         }
+    //     ]
+    // };
+    // Retrieve the quiz result object passed from the previous page
+    // const quizResult = JSON.stringify(localStorage.getItem('quizResult'));
+    //
+    // console.log(quizResult);
+    //
+    //
+
+
+
+    // Retrieve the stringified JSON object from localStorage
+    const storedResultString = localStorage.getItem('quizResult');
+
+    // Parse the stringified JSON object into a JavaScript object
+    const storedResult = JSON.parse(storedResultString);
+
+    // Transform the parsed result into the desired format
+    const transformedResult = {
+        totalCorrect: storedResult.questionAnswers.filter(answer => answer.correctAnswer === answer.chosenAnswer).length,
+        questionResults: storedResult.questionAnswers.map(answer => ({
+            question: answer.question,
+            isCorrect: answer.correctAnswer === answer.chosenAnswer
+        }))
+    };
+
+    // Now you can use the transformedResult object
+    console.log(transformedResult);
 
     // Send the quiz result data to the backend and display the feedback
     fetch('http://localhost:8090/give_feedback', {
@@ -63,7 +103,9 @@
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(quizResult)
+        body: JSON.stringify(transformedResult)
+        // body: JSON.stringify(quizResult)
+        // body: quizResult
     })
         .then(response => response.text())
         .then(feedback => {
