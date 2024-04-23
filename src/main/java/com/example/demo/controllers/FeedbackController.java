@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.controllers;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -8,6 +8,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import com.example.demo.models.ChatGPTRequest;
+import com.example.demo.models.ChatGPTResponse;
+import com.example.demo.models.Message;
+import com.example.demo.models.QuestionResult;
+import com.example.demo.models.QuizResult;
 
 import java.util.ArrayList;
 import java.util.List;

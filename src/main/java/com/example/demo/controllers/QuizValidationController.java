@@ -1,8 +1,13 @@
-package com.example.demo;
+package com.example.demo.controllers;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.models.QuestionAnswerOpt;
+import com.example.demo.models.QuestionResult;
+import com.example.demo.models.QuizAnswers;
+import com.example.demo.models.QuizResult;
 
 import java.util.ArrayList;
 import java.util.List;

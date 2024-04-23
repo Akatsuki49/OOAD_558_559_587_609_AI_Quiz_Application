@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.models;
 
 public class QuestionAnswerOpt {
     //each question will have a string q, list of optns, and correct ans
