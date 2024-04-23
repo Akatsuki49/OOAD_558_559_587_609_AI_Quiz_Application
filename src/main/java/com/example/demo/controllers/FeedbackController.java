@@ -56,7 +56,7 @@ public class FeedbackController {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders header = new HttpHeaders();
 
-        //added test comment
+        //added test comment.
         header.add("Authorization", "Bearer sk-proj-rj2BDsxu2LxR2A0bfcwST3BlbkFJg71k73iJ4Q43ESvbhrd3");
 
         HttpEntity<ChatGPTRequest> entity = new HttpEntity<>(req, header);
