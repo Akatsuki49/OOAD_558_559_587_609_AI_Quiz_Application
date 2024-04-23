@@ -10,6 +10,11 @@
     background-color: #f8f9fa;
     text-align: center; 
   }
+  h1 {
+    font-weight: bold;
+    font-size: 60px;
+    margin-bottom: 20px;
+  }
   .jumbotron {
     background-color: #343a40;
     color: #ffffff;
@@ -21,22 +26,37 @@
   #quizData {
     text-align: left; 
   }
+  .login input[type="text"],
+  .login input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+.login input[type="text"]:focus,
+.login input[type="password"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
 </style>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="#">Kaun Banega Crorepati</a>
+      <a class="navbar-brand" href="#">Quiz.Ai</a>
     </div>
   </nav>
 
   <header>
     <div class="jumbotron jumbotron-fluid">
       <div class="container">
-        <h1 class="display-4">Kaun Banega Crorepati</h1>
-        <p class="lead">Wet your intellectual appetite</p>
+        <h1>Quiz.Ai</h1>
+        <p class="lead">An AI Powered Quiz Application</p>
         <div class="login">
-          <h1>Login</h1>
+          <h3>Login</h3>
           <form action="/login" method="post" id="loginForm">
             <input type="text" placeholder="username" id="userName"><br><br>
             <input type="password" placeholder="password" id="password"><br><br>
