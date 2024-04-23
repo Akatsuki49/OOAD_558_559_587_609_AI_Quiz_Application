@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.AuthReply;
 import com.example.demo.models.Authentication;
-import com.example.demo.utils.performAuth;
+import com.example.demo.services.performAuth;
 
 @RestController
 public class AuthController extends performAuth {

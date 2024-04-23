@@ -1,4 +1,4 @@
-package com.example.demo.utils;
+package com.example.demo.models;
 
 public class RequestObject {
     private String sendSowmeshDetails;
