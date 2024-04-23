@@ -1,4 +1,5 @@
 package com.example.demo;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,21 +9,21 @@ import java.sql.SQLException;
 public class performAuth {
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/springdb";
     private static final String DB_USERNAME = "postgres";
-//    private static final String DB_PASSWORD = "root";
-    private static final String DB_PASSWORD = "admin";
+    private static final String DB_PASSWORD = "root";
+    // private static final String DB_PASSWORD = "admin";
 
     private String userName;
     private String password;
     private boolean isSignUp;
 
     public boolean getIsSignUp() {
-    	return isSignUp;
+        return isSignUp;
     }
-    
+
     public void setIsSignUp(boolean isSignUp) {
-    	this.isSignUp = isSignUp;
+        this.isSignUp = isSignUp;
     }
-    
+
     public String getUserName() {
         return userName;
     }
@@ -41,12 +42,10 @@ public class performAuth {
 
     public boolean authenticate() {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            if (!isSignUp)
-            {
+            if (!isSignUp) {
                 System.out.println("Attempting to sign up...");
                 return signUp(connection);
-            }
-            else {
+            } else {
                 System.out.println("Attempting to sign in...");
                 return signIn(connection);
             }

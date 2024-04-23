@@ -39,7 +39,8 @@
 
 <div class="container">
     <div id="feedbackData"></div>
-    <button id="playAgainButton" class="btn btn-primary mt-3">Play Again</button>
+    <button id="playAgainButton" class="btn btn-primary m-3">Play Again</button>
+    <button id="logOutButton" class="btn btn-primary m-3">Log Out</button>
 </div>
 
 <footer class="mt-4">
@@ -93,6 +94,10 @@
     // Add event listener to the "Play Again" button
     document.getElementById('playAgainButton').addEventListener('click', function() {
         window.location.href = '/quiz';
+    });
+    
+    document.getElementById('logOutButton').addEventListener('click', function() {
+        window.location.href = '/';
     });
 </script>
 </body>

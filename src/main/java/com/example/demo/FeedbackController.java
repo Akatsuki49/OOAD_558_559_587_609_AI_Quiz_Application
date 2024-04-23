@@ -20,7 +20,10 @@ public class FeedbackController {
 
         // Construct the query including information about the quiz result
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append("According to the quiz results, here are some areas for improvement give me a list:\n\n");
+        // queryBuilder.append("According to the quiz results, here are some areas for
+        // improvement give me a list:\n\n");
+        queryBuilder.append(
+                "According to the quiz results, here are some areas for improvement based on the questions answered right and wrong. Give a verbose answer in 2nd person speech and elaborate on areas of weakness in topics. Don't suggest improvements in a question if it was answered correctly. Praise the user if he does well in terms of total correct questions. Give me a list:\n\n");
 
         // Provide overall feedback based on total correct answers
         queryBuilder.append("Total correct answers: ").append(quizResult.getTotalCorrect()).append("\n");
@@ -50,7 +53,8 @@ public class FeedbackController {
         header.add("Authorization", "Bearer sk-proj-rj2BDsxu2LxR2A0bfcwST3BlbkFJg71k73iJ4Q43ESvbhrd3");
 
         HttpEntity<ChatGPTRequest> entity = new HttpEntity<>(req, header);
-        ResponseEntity<ChatGPTResponse> resp = restTemplate.exchange("https://api.openai.com/v1/chat/completions", HttpMethod.POST, entity, ChatGPTResponse.class);
+        ResponseEntity<ChatGPTResponse> resp = restTemplate.exchange("https://api.openai.com/v1/chat/completions",
+                HttpMethod.POST, entity, ChatGPTResponse.class);
 
         return resp.getBody().getChoices().get(0).getMessage().getContent();
     }
